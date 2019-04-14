@@ -10,7 +10,7 @@ export default class Board extends Component {
                     {this.props.tiles.map( tile => tile )}                    
                 </div>                
                 <div className='help'>
-                    <small>Clique em rolar dado para avançar.</small><br/>
+                    <small>Clique em ROLL para avançar.</small><br/>
                     <small>O primeiro jogador que chegar na última casas vence.</small>
                 </div>
                 <div className='dice'>

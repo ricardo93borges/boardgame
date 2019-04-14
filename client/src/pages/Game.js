@@ -15,13 +15,24 @@ export default class Game extends Component {
             playerSquare: 1,
             adversarySquare: 1,
             diceValue: 'ROLL',
-            totalTiles: 50
+            totalTiles: 50,
+            bonusTile1:0,
+            bonusTile2:0,
+            onusTile1:0,
+            onusTile2:0,
         }
     }
 
     componentDidMount(){
         this.renderTiles()
         this.subscribeToEvents()
+
+        let bonusTile1 = Math.floor(Math.random() * this.state.totalTiles-1) + 2
+        let bonusTile2 = Math.floor(Math.random() * this.state.totalTiles-1) + 2
+        let onusTile1 = Math.floor(Math.random() * this.state.totalTiles-1) + 2
+        let onusTile2 = Math.floor(Math.random() * this.state.totalTiles-1) + 2
+        this.setState({bonusTile1, bonusTile2, onusTile1, onusTile2})
+        console.log(bonusTile1, bonusTile2, onusTile1, onusTile2)
     }
 
     subscribeToEvents = () => {
@@ -62,14 +73,38 @@ export default class Game extends Component {
             alert('Aguarde o outro jogador jogar')
         }else{
             let diceValue = Math.floor(Math.random() * 6) + 1
-            let playerSquare = this.state.playerSquare + diceValue        
-            this.setState({diceValue, playerSquare}, () => this.renderTiles())
-            this.io.emit('move', {square:playerSquare})
-            
-            if(playerSquare >= this.state.totalTiles){
-                this.io.emit('win', {})
-            }
+            let playerSquare = this.state.playerSquare + diceValue                    
+            this.move(diceValue, playerSquare)
         }
+    }
+
+    checkBonusTile = (diceValue, playerSquare) => {
+        if([this.state.bonusTile1, this.state.bonusTile2].includes(playerSquare)){
+            let value = Math.floor(Math.random() * 6) + 1
+            alert(`Avance ${value} casas`)
+            let newPlayerSquare = playerSquare+value
+            this.move(diceValue, newPlayerSquare)
+        }
+
+        if([this.state.onusTile1, this.state.onusTile2].includes(playerSquare)){
+            let value = Math.floor(Math.random() * 6) + 1
+            alert(`Recue ${value} casas`)
+            let newPlayerSquare = playerSquare-value
+            newPlayerSquare = newPlayerSquare < 1 ? 1 : newPlayerSquare
+            this.move(diceValue, newPlayerSquare)
+        }
+    }
+
+    move = (diceValue, playerSquare) => {
+        this.setState({diceValue, playerSquare}, () => {
+            this.renderTiles()
+            
+            this.io.emit('move', {square:playerSquare})
+        
+            if(playerSquare >= this.state.totalTiles) this.io.emit('win', {})
+            
+            this.checkBonusTile(diceValue, playerSquare)
+        })
     }
 
     renderTiles = () => {
