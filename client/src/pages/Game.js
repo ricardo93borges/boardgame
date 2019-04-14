@@ -24,15 +24,14 @@ export default class Game extends Component {
     }
 
     componentDidMount(){
-        this.renderTiles()
-        this.subscribeToEvents()
-
         let bonusTile1 = Math.floor(Math.random() * this.state.totalTiles-1) + 2
         let bonusTile2 = Math.floor(Math.random() * this.state.totalTiles-1) + 2
         let onusTile1 = Math.floor(Math.random() * this.state.totalTiles-1) + 2
         let onusTile2 = Math.floor(Math.random() * this.state.totalTiles-1) + 2
-        this.setState({bonusTile1, bonusTile2, onusTile1, onusTile2})
-        console.log(bonusTile1, bonusTile2, onusTile1, onusTile2)
+        this.setState({bonusTile1, bonusTile2, onusTile1, onusTile2}, () => {
+            this.renderTiles()
+            this.subscribeToEvents()    
+        })
     }
 
     subscribeToEvents = () => {
@@ -112,9 +111,14 @@ export default class Game extends Component {
         let tiles = []
         let classname = ''
         
+        console.log(this.state.bonusTile1, this.state.bonusTile2)
+        
         for(let i = 1; i <= totalTiles; i++){
             classname = 'default-tile'
             
+            if([this.state.bonusTile1, this.state.bonusTile2].includes(i)) classname = 'bonus-tile'
+            if([this.state.onusTile1, this.state.onusTile2].includes(i)) classname = 'onus-tile'
+
             if( i === totalTiles) {
                 if(this.state.playerSquare >= i) classname = 'player-tile'
                 if(this.state.adversarySquare >= i) classname = 'adversary-tile'
@@ -132,13 +136,31 @@ export default class Game extends Component {
 
     renderBoard = () => {
         if(this.state.showBoard){
-            return <Board 
-                tiles={this.state.tiles}
-                playerSquare={this.state.playerSquare}
-                adversarySquare={this.state.adversarySquare}
-                diceValue={this.state.diceValue}
-                handleRoll={this.handleRoll}
-                handleMove={this.handleMove} />
+            return (
+                <div className='container'>
+                    <div className='names'>
+                        <div className='name'>
+                            <span className='color player-tile'></span> Voce
+                        </div>
+                        <div className='name'>
+                            <span className='color adversary-tile'></span> Adversario
+                        </div>
+                        <div className='name'>
+                            <span className='color bonus-tile'></span> Bônus
+                        </div>
+                        <div className='name'>
+                            <span className='color onus-tile'></span> Ônus
+                        </div>
+                    </div>
+                    <Board 
+                        tiles={this.state.tiles}
+                        playerSquare={this.state.playerSquare}
+                        adversarySquare={this.state.adversarySquare}
+                        diceValue={this.state.diceValue}
+                        handleRoll={this.handleRoll}
+                        handleMove={this.handleMove} />
+                </div>
+                )                
         } else {
             return (
                 <div className='container'>

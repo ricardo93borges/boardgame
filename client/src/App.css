@@ -43,6 +43,14 @@
     background-color: #CD5C5C;
 }
 
+.bonus-tile {
+    background-color: #32CD32;
+}
+
+.onus-tile {
+    background-color: #FFFF00;
+}
+
 .help {
   width: 100%;
   float: left;
@@ -69,4 +77,21 @@
 
 .dice button:hover {
   cursor: pointer;
+}
+
+.names {
+  width: 50%;
+  margin: 5px auto;
+}
+
+.names .name {
+  float: left;
+  width: 25%;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.names .color {
+  padding: 2px 10px;
+  margin-right: 5px;
 }
