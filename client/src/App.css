@@ -95,3 +95,28 @@
   padding: 2px 10px;
   margin-right: 5px;
 }
+
+.name-input {
+  padding: 5px;
+  width: 90%;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+  border: 2px solid #CCC;
+}
+
+.start-button {
+  padding: 15px 10px;
+  width: 50%;
+  border-radius: 52px;
+  text-align: center;
+  font-weight: bold;
+  background-color: #FFFF00;
+  border: 2px dashed #000;
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+.start-button:hover {
+  cursor: pointer;
+}

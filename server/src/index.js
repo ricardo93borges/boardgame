@@ -29,13 +29,18 @@ io.on('connection', socket => {
   }
 
   socket.on('move', (data) => {
-    console.log('move', data)
     io.emit('move', {player: socket.handshake.headers.origin, ...data})
   })
 
   socket.on('win', (data) => {
-    console.log('win', data)
     io.emit('win', {player: socket.handshake.headers.origin, ...data})
+  })
+
+  socket.on('store name', (data) => {
+    console.log('store name', data)
+    let ip = socket.handshake.headers.origin
+    jsonHelper.storeName(ip, data.name)
+    io.emit('player list', {ips: jsonHelper.getIps()})
   })
 
   socket.on('disconnect', () => {

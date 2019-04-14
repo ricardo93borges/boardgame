@@ -15,10 +15,23 @@ const getIps = () => {
     return json.ips
 }
 
-const storeIp = (ip) => {
+const storeIp = (ip) => {    
     const json = read()
-    if(!json.ips.includes(ip)){
-        json.ips.push(ip)
+    const obj = json.ips.find(obj => obj.ip === ip)
+    if(obj === undefined){
+        json.ips.push({ip:ip, player:''})
+        const jsonString = JSON.stringify(json)
+        write(jsonString)
+    }
+}
+
+const storeName = (ip, name) => {
+    console.log('storeName', ip, name)    
+    const json = read()
+    const index = json.ips.findIndex(obj => obj.ip === ip)
+    console.log('index', index)
+    if(index > -1){
+        json.ips[index].player = name
         const jsonString = JSON.stringify(json)
         write(jsonString)
     }
@@ -26,7 +39,7 @@ const storeIp = (ip) => {
 
 const removeIp = (ip) => {
     const json = read()
-    const index = json.ips.indexOf(ip)
+    const index = json.ips.findIndex(obj => obj.ip === ip)
     if(index > -1){
         json.ips.splice(index, 1)
         const jsonString = JSON.stringify(json)
@@ -37,5 +50,6 @@ const removeIp = (ip) => {
 module.exports = {
     getIps,
     storeIp,
+    storeName,
     removeIp
 }
