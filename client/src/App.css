@@ -1,0 +1,72 @@
+.container {
+  width: 100%;
+}
+
+.waitingList {
+  margin: 10px auto;
+  width: 30%;
+  background-color: #fafafa;
+  border: 1px solid #CCC;
+  padding: 10px;
+  text-align: center;
+}
+
+.board {
+  width: 60%;
+  margin: 10px auto;
+}
+
+.board .tile {
+  border: none;
+  height: 100px;
+  width: 100px;
+  float: left;
+  margin: 1px;  
+}
+
+.board .tile .number {
+  background-color: #FFF;
+  color: #a9a9a9;
+  float: left;
+  padding: 2px;
+}
+
+.default-tile {
+  background: #c0c0c0;
+}
+
+.player-tile {
+    background-color: #87CEEB;
+}
+
+.adversary-tile {
+    background-color: #CD5C5C;
+}
+
+.help {
+  width: 100%;
+  float: left;
+  text-align: center;
+  color: #808080;
+  margin: 10px auto;
+}
+
+.dice {
+  width: 100%;
+  float: left;
+  text-align: center;
+  margin: 10px auto;
+}
+
+.dice button {
+  background-color: #FF4500;
+  color: #FFF;
+  padding: 40px 24px;
+  border-radius: 60px;
+  border: 5px dashed #000;
+  font-size: 1.5em;
+}
+
+.dice button:hover {
+  cursor: pointer;
+}
