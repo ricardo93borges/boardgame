@@ -45,6 +45,12 @@ export default class Game extends Component {
     }
 
     subscribeToEvents = () => {
+
+        if(window.location.origin.indexOf('localhost') !== -1){
+            alert('Localhost não é permitido, use seu IP local')
+            return
+        }
+
         this.io = socket(this.host)
         
         this.io.on('players online', data => {
